@@ -31,7 +31,7 @@ function operate () {
     while (calculation.includes("/")){
         for (let j = 0; j < calculation.length; j++){
             if (calculation[j]=='/') {
-                calculation[j] = Number(calculation[j-1]) / Number(calculation[j+1]);
+                calculation[j] = parseFloat(calculation[j-1]) / parseFloat(calculation[j+1]);
                 calculation.splice(j+1,1);
                 calculation.splice(j-1,1);
                 console.log(calculation)
@@ -41,7 +41,7 @@ function operate () {
     while (calculation.includes("*")){
         for (let j = 0; j < calculation.length; j++){
             if (calculation[j]=='*') {
-                calculation[j] = Number(calculation[j-1]) * Number(calculation[j+1]);
+                calculation[j] = parseFloat(calculation[j-1]) * parseFloat(calculation[j+1]);
                 calculation.splice(j+1,1);
                 calculation.splice(j-1,1);
                 console.log(calculation)
@@ -51,17 +51,17 @@ function operate () {
     while (calculation.includes("+")){
         for (let j = 0; j < calculation.length; j++){
             if (calculation[j]=='+') {
-                calculation[j] = Number(calculation[j-1]) + Number(calculation[j+1]);
+                calculation[j] = parseFloat(calculation[j-1]) + parseFloat(calculation[j+1]);
                 calculation.splice(j+1,1);
                 calculation.splice(j-1,1);
                 console.log(calculation)
             }
         }
     }
-    while (calculation.includes("/")){
+    while (calculation.includes("-")){
         for (let j = 0; j < calculation.length; j++){
             if (calculation[j]=='-') {
-                calculation[j] = Number(calculation[j-1]) - Number(calculation[j+1]);
+                calculation[j] = parseFloat(calculation[j-1]) - parseFloat(calculation[j+1]);
                 calculation.splice(j+1,1);
                 calculation.splice(j-1,1);
                 console.log(calculation)
@@ -77,6 +77,22 @@ noButtons.forEach((button) => {
         let displayString = calculation.join(',') + accumulator.toString();
         displaySum.textContent = displayString.replace(/,/g, "");
     })
+})
+const pointButton = document.querySelector('.point');
+pointButton.addEventListener('click', (e) => {
+    accumulator += pointButton.textContent;
+    let displayString = calculation.join(',') + accumulator.toString();
+    displaySum.textContent = displayString.replace(/,/g, "");
+})
+const backspace = document.querySelector('.backspace');
+backspace.addEventListener('click', (e) => {
+    if (accumulator != '') {
+        accumulator = '';
+    } else {
+        calculation.pop();
+    }
+    let displayString = calculation.join(',') + accumulator.toString();
+    displaySum.textContent = displayString.replace(/,/g, "");
 })
 const opButtons = document.querySelectorAll('.operatorButton');
 opButtons.forEach((button) => {
@@ -108,6 +124,8 @@ const equalsButton = document.querySelector('.equals');
 equalsButton.addEventListener('click', (e) => {
     operate();
     displaySum.textContent = calculation;
+    calculation = [];
+    accumulator= '';
 })
 const clearButton = document.querySelector('.clear');
 clearButton.addEventListener('click', (e) => {
