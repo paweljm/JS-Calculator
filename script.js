@@ -28,6 +28,14 @@ function mult () {
 function operate () {
     let finalSum;
     calculation.push(accumulator);
+    if (calculation[0]== '+' || calculation[0]== '*' ||calculation[0]== '/' ||calculation[0]== '-' || calculation[0]== '') {
+        calculation.shift();
+        calculation.shift();
+    }
+    if (calculation[calculation.length-1] == ''){
+        calculation.pop();
+        calculation.pop();
+    }
     while (calculation.includes("/")){
         for (let j = 0; j < calculation.length; j++){
             if (calculation[j]=='/') {
